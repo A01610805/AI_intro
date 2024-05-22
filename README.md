@@ -1,5 +1,6 @@
 # AI_intro
 
+El objetivo de este proyecto es implementar una Red Neuronal Convolucional (CNN, por sus siglas en inglés), para la categorización de imágenes de piezas de LEGO. 
 
 Se utilizará un Dataset de 6,414 elementos (imágenes .PNG) divididos en 16 categorías.
 La separación de datos para el entrenamiento y prueba del modelo fue de 80%/20%, considerando que 1280 imágenes serán suficientes para validar el correcto funcionamiento del modelo, y aprovechando el resto para un entrenamiento robusto y completo.
