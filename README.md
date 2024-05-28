@@ -6,6 +6,7 @@ Se utilizó un Dataset de 6,414 elementos (imágenes .PNG) divididos en 16 categ
 
 ## Escalamiento de Imágenes
 En cuanto a las técnicas de escalamiento, se decidió utilizar las siguientes:
+
 _**Zoom:**_ Como su nombre lo indica, es la función encargada de hacer zoom a las imágenes, de forma aleatoria dentro del rango establecido del 0 al 30%. Esto sirve para que el modelo no se quede con un solo tamaño de la pieza, y sea capaz de identificarlas sin importar que tan cercana o lejana ha sido tomada la imagen. 
 _**width_shift_range:**_ Se refiere al cambio en el rango de ancho de la imagen. En otras palabras, "mueve" la imagen hacia la izquierda o derecha, en este caso dentro de un rango del 0 al 20% de su tamaño hacia cada lado, para que el modelo sea capaz de identificar piezas de LEGO no solo centradas en la imagen, sino ubicadas en distintas zonas de la misma. 
 _**height_shift_range:**_ Es la función encargada de "mover" la imagen, al igual que width_shift_range, pero de forma horizontal, en un rango del 0 al 20% tanto hacia arriba como hacia abajo. Su objetivo es muy similar, el de ubicar las piezas de LEGO en distintas áreas dentro de la matriz de la imagen, para que el modelo no busque objetos únicamente en el centro de la imagen.
