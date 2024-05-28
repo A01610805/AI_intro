@@ -36,7 +36,7 @@ La implementación que se utilizó de guí sugiere un total de 5 capas convoluti
 
 
 
-### Referencias:
+## Referencias:
 
 **Dataset -** [Joost Hazelzet]. ([2021]). [Images of LEGO Bricks], [Version 4]. Retrieved [May 15th] from [https://www.kaggle.com/datasets/joosthazelzet/lego-brick-images].
 
