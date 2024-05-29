@@ -52,7 +52,7 @@ Se podría decir que es un problema de overfitting, interpretando que el modelo 
 
 Para obtener un modelo con un mayor porcentaje de precisión, se proponen dos soluciones: 
 
-La primer opción tiene que ver con el dataset. Se propone **simplificar categorías** dentro de éste, es decir, unir categorías con piezas muy similares, como la 3003 y la 3022, o la 11214 y la 18651. Esto ayudaría a que el modelo no confundiera dichas piezas, y se obtendría así un porcentaje más alto de _accuracy_
+La primer opción tiene que ver con el dataset. Se propone **simplificar categorías** dentro de éste, es decir, unir categorías con piezas muy similares, como la _3003_ y la _3022_, o la _11214_ y la _18651_. Esto ayudaría a que el modelo no confundiera dichas piezas, y se obtendría así un porcentaje más alto de _accuracy_
 
 La Segunda opción es Implementar un modelo llamado **_Xception_**, que utiliza redes ya establecidas como punto de partida de su entrenamiento, en lugar de comenzar con valores meramente aleatorios. Existen ejemplos de modelos entrenados para datasets muy similares a los que se están utilizando en este proyecto, con un porcentaje muy alto de precisión, lo que sugiere que se podría obtener algo similar si se decide utilizar para resolver este reto.
 
