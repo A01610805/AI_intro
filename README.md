@@ -20,27 +20,45 @@ _**height_shift_range:**_ Es la función encargada de "mover" la imagen, al igua
 ## Red Neuronal Convolutiva
 Se utilizó como referencia la implementación propuesta por Alex Krizhevsky, Ilya Sutskever y Geoffrey E. Hinton en su paper “ImageNet Classification with Deep Convolutional Neural Networks”, y se adaptó a las capacidades de cómputo con que se disponía para la ejecución de este proyecto, así como las diferencias en dimensiones entre el dataset utilizado para su red (1.2 millones de imágenes de alta resolución, divididas en 1,000 clases), y el nuestro. A continuación se describe en detalle el diseño de la red.
 
-Se decidió implementar un modelo secuencial, es decir, una red en la que la salida de una capa se convierte directamente en la entrada de la siguiente. El orden de las capas del modelo es el siguiente:
-_**Input --> Conv2D --> Conv2D --> Conv2D --> Flatten --> Dense --> Dense --> Output**_
+Se decidió implementar un **_modelo secuencial_**, es decir, una red en la que la salida de una capa se convierte directamente en la entrada de la siguiente. El orden de las capas del modelo es el siguiente:
+_**Input --> Conv2D --> Conv2D --> Conv2D --> Conv2D --> Conv2D --> Flatten --> Dense --> Dense  --> Dense --> Output**_
 
-•	3 capas convolutivas de 2 dimensiones, en las que el tamaño de los filtros se va reduciendo, pero la cantidad de filtros a aplicar va aumentando proporcionalmente, y se aplica la función de activación ReLU (Rectified Linear Unit) en las 3. 
-La implementación que se utilizó de guí sugiere un total de 5 capas convolutivas, disminuyendo de igual forma el tamaño de los filtros a aplicar, pero a una escala bastante mayor (aplicando 96 filtros de 11 x 11 x 3, y llegando hasta 256 filtros de 3 x 3 x 192). Como se mencionó anteriormente, en nuestro modelo se redujo el tamaño de dichos filtros, y la cantidad de los mismos, para una correcta adaptación al poder de cómputo con que se cuenta para el entrenamiento.
+•	5 capas convolutivas de 2 dimensiones, en las que el tamaño de los filtros se va reduciendo, pero la cantidad de filtros a aplicar va aumentando proporcionalmente, y se aplica la función de activación ReLU (Rectified Linear Unit) en las 5. 
+La implementación que se utilizó de guía disminuye de igual forma el tamaño de los filtros a aplicar, pero a una escala bastante mayor (aplicando 96 filtros de 11 x 11 x 3, y llegando hasta 256 filtros de 3 x 3 x 192). Como se mencionó anteriormente, en nuestro modelo se redujo el tamaño de dichos filtros, y la cantidad de los mismos, para una correcta adaptación al poder de cómputo con que se cuenta para el entrenamiento.
 
 •	Una capa “Flatten”, para “aplanar”, o convertir la salida de la última capa convolutiva 2D, en un vector de una sola dimensión. Hacemos esto para que la siguiente capa (densa) funcione correctamente.
 
-•	Unac capa densa de 64 neuronas. Esta capa es también conocida como “completamente conectada” ya que todas las neuronas se conectan entre ellas.
+•	Unac capa densa de 128 neuronas. Esta capa es también conocida como “completamente conectada” ya que todas las neuronas se conectan entre ellas.
+
+•	Otra capa densa, pero esta de 64 neuronas.
 
 •	Y por último, una capa densa con activación softmax, adecuada para la categorización de imágenes, y 16 neuronas, una para cada categoría del dataset con el que se está trabajando.
 
 
+## Testing y Métricas
 
+Luego de haber entrenado el modelo hasta su estancamiento en el 34% de accuracy dentro del set de entrenamiento, se procedió a probar con el set de Testing, obteniendo un 9% de accuracy, apenas 3% por encima de lo que se obtendría si se categorizaran de forma aleatoria. 
+
+Haciendo un análisis más profundo, buscando el porqué de estos resultados, se obtuvieron datos interesantes, muy útiles para dar los siguientes pasos en el mejoramiento del modelo. Al construir una matriz de confusión con los datos obtenidos en las pruebas,  se observó que la gran mayoría de las predicciones que hace el modelo, son de las categorías 14, 6 y 4. Es decir,  está “confundiendo” varias categorías de piezas y simplificando su clasificación casi en su totalidad, a estas 3 categorías. 
+Se podría decir que es un problema de overfitting, interpretando que el modelo “memorizó” ciertos patrones. Sin embargo, al tener un porcentaje tan bajo de accuracy en el entrenamiento, es muy poco probable que este sea el caso.
+
+
+## Siguientes Pasos
+
+Para obtener un modelo con un mayor porcentaje de precisión, se proponen dos soluciones: 
+
+La primer opción tiene que ver con el dataset. Se propone **simplificar categorías** dentro de éste, es decir, unir categorías con piezas muy similares, como la 3003 y la 3022, o la 11214 y la 18651. Esto ayudaría a que el modelo no confundiera dichas piezas, y se obtendría así un porcentaje más alto de _accuracy_
+
+La Segunda opción es Implementar un modelo llamado **_Xception_**, que utiliza redes ya establecidas como punto de partida de su entrenamiento, en lugar de comenzar con valores meramente aleatorios. Existen ejemplos de modelos entrenados para datasets muy similares a los que se están utilizando en este proyecto, con un porcentaje muy alto de precisión, lo que sugiere que se podría obtener algo similar si se decide utilizar para resolver este reto.
+
+(La documentación con imágenes se encuentra en el documento _documentacion.pdf_)
 
 
 ## Referencias:
 
 **Dataset -** [Joost Hazelzet]. ([2021]). [Images of LEGO Bricks], [Version 4]. Retrieved [May 15th] from [https://www.kaggle.com/datasets/joosthazelzet/lego-brick-images].
 
-**Paper de referencia – **A. Krizhevsky, I. Sutskever, and G. E. Hinton, "ImageNet classification with deep convolutional neural networks," in Advances in Neural Information Processing Systems 25, 2012, pp. 1097-1105.
+**Paper de referencia –** A. Krizhevsky, I. Sutskever, and G. E. Hinton, "ImageNet classification with deep convolutional neural networks," in Advances in Neural Information Processing Systems 25, 2012, pp. 1097-1105.
 
 _link a Google Drive del Dataset: https://drive.google.com/drive/folders/1N3XUCOKy_GJDuUURXu-Upi_2kAdC32ds?usp=sharing_
 
