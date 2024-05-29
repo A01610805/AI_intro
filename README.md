@@ -4,6 +4,8 @@ El objetivo de este proyecto es implementar una Red Neuronal Convolutiva (CNN, p
 
 Se utilizó un Dataset de 6,414 elementos (imágenes .PNG) divididos en 16 categorías, que corresponden a 16 tipos diferentes de piezas LEGO. La separación de datos para el entrenamiento y prueba del modelo fue de 80%/20%, considerando que 1280 imágenes serán suficientes para validar el correcto funcionamiento del modelo, y aprovechando el resto para un entrenamiento robusto y completo. 
 
+
+
 ## Escalamiento de Imágenes
 En cuanto a las técnicas de escalamiento, se decidió utilizar las siguientes:
 
@@ -15,6 +17,7 @@ _**height_shift_range:**_ Es la función encargada de "mover" la imagen, al igua
 
  Se decidió no utilizar otras funciones como la _**rotación**_, o el _**flip horizontal,**_ debido a que el dataset se encuentra ya muy completo en cuanto a los ángulos en que fueron tomadas las imágenes, por lo que dichas técnicas serían de poca utilidad al entrenar el modelo.
  Es importante mencionar que el escalamiento de imágenes se lleva a cabo como parte del proceso de entrenamiento, con la misma RAM que se utiliza para correr la red. Las imágenes generadas en ningún momento se almacenan en el disco, sino que la función es utilizada únicamente una vez que se comienza a entrenar el modelo.
+
 
 
 ## Red Neuronal Convolutiva
@@ -35,12 +38,14 @@ La implementación que se utilizó de guía disminuye de igual forma el tamaño 
 •	Y por último, una capa densa con activación softmax, adecuada para la categorización de imágenes, y 16 neuronas, una para cada categoría del dataset con el que se está trabajando.
 
 
+
 ## Testing y Métricas
 
 Luego de haber entrenado el modelo hasta su estancamiento en el 34% de accuracy dentro del set de entrenamiento, se procedió a probar con el set de Testing, obteniendo un 9% de accuracy, apenas 3% por encima de lo que se obtendría si se categorizaran de forma aleatoria. 
 
 Haciendo un análisis más profundo, buscando el porqué de estos resultados, se obtuvieron datos interesantes, muy útiles para dar los siguientes pasos en el mejoramiento del modelo. Al construir una matriz de confusión con los datos obtenidos en las pruebas,  se observó que la gran mayoría de las predicciones que hace el modelo, son de las categorías 14, 6 y 4. Es decir,  está “confundiendo” varias categorías de piezas y simplificando su clasificación casi en su totalidad, a estas 3 categorías. 
 Se podría decir que es un problema de overfitting, interpretando que el modelo “memorizó” ciertos patrones. Sin embargo, al tener un porcentaje tan bajo de accuracy en el entrenamiento, es muy poco probable que este sea el caso.
+
 
 
 ## Siguientes Pasos
@@ -52,6 +57,7 @@ La primer opción tiene que ver con el dataset. Se propone **simplificar categor
 La Segunda opción es Implementar un modelo llamado **_Xception_**, que utiliza redes ya establecidas como punto de partida de su entrenamiento, en lugar de comenzar con valores meramente aleatorios. Existen ejemplos de modelos entrenados para datasets muy similares a los que se están utilizando en este proyecto, con un porcentaje muy alto de precisión, lo que sugiere que se podría obtener algo similar si se decide utilizar para resolver este reto.
 
 (La documentación con imágenes se encuentra en el documento _documentacion.pdf_)
+
 
 
 ## Referencias:
