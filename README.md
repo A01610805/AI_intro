@@ -1,13 +1,15 @@
 # AI_intro
 
-El objetivo de este proyecto es implementar una Red Neuronal Convolutiva (CNN, por sus siglas en inglés), para la categorización de imágenes de piezas de LEGO.
+El objetivo de este proyecto es implementar una Red Neuronal Convolutiva (CNN, por sus siglas en inglés), utilizando el principio de “Transfer Learning” con la herramienta “XCeption” para la categorización de imágenes de piezas de LEGO.
 
-Se utilizó un Dataset de 6,414 elementos (imágenes .PNG) divididos en 16 categorías, que corresponden a 16 tipos diferentes de piezas LEGO. La separación de datos para el entrenamiento y prueba del modelo fue de 80%/20%, considerando que 1280 imágenes serán suficientes para validar el correcto funcionamiento del modelo, y aprovechando el resto para un entrenamiento robusto y completo. 
+Se utilizó un Dataset de 6,414 elementos (imágenes .PNG) divididos en 16 categorías, que corresponden a 16 tipos diferentes de piezas LEGO. La separación de datos para el entrenamiento y prueba del modelo fue de 80%/20%, considerando que 1280 imágenes serán suficientes para validar el correcto funcionamiento del modelo, y aprovechando el resto para un entrenamiento robusto y completo.
+
+A continuación se describe el proceso por el que se pasó para llegar a la versión final del modelo, incluyendo una versión muy poco funcional del mismo.  
 
 
 
 ## Escalamiento de Imágenes
-En cuanto a las técnicas de escalamiento, se decidió utilizar las siguientes:
+Antes del entrenamiento del modelo como tal, las imágenes fueron preprocesadas mediante diferentes técnicas de escalamiento. Luego de un análisis del dataset, observando el tipo de imágenes con que se contaba, se decidió utilizar las siguientes técnicas:
 
 _**Zoom:**_ Como su nombre lo indica, es la función encargada de hacer zoom a las imágenes, de forma aleatoria dentro del rango establecido del 0 al 30%. Esto sirve para que el modelo no se quede con un solo tamaño de la pieza, y sea capaz de identificarlas sin importar que tan cercana o lejana ha sido tomada la imagen. 
 
@@ -18,10 +20,13 @@ _**height_shift_range:**_ Es la función encargada de "mover" la imagen, al igua
  Se decidió no utilizar otras funciones como la _**rotación**_, o el _**flip horizontal,**_ debido a que el dataset se encuentra ya muy completo en cuanto a los ángulos en que fueron tomadas las imágenes, por lo que dichas técnicas serían de poca utilidad al entrenar el modelo.
  Es importante mencionar que el escalamiento de imágenes se lleva a cabo como parte del proceso de entrenamiento, con la misma RAM que se utiliza para correr la red. Las imágenes generadas en ningún momento se almacenan en el disco, sino que la función es utilizada únicamente una vez que se comienza a entrenar el modelo.
 
-
+Por último, una vez que declaramos el batch de imágenes, tanto para entrenamiento como para validación, éstos pasan por un proceso de “**_Shuffle_**”, para no cesgar el entrenamiento del modelo, ni desbalancear la cantidad de imágenes que recibe de cada categoría.
 
 ## Red Neuronal Convolutiva
-Se utilizó como referencia la implementación propuesta por Alex Krizhevsky, Ilya Sutskever y Geoffrey E. Hinton en su paper “ImageNet Classification with Deep Convolutional Neural Networks”, y se adaptó a las capacidades de cómputo con que se disponía para la ejecución de este proyecto, así como las diferencias en dimensiones entre el dataset utilizado para su red (1.2 millones de imágenes de alta resolución, divididas en 1,000 clases), y el nuestro. A continuación se describe en detalle el diseño de la red.
+
+**_Versión 1_**
+
+Se utilizó inicialmente como referencia la implementación propuesta por Alex Krizhevsky, Ilya Sutskever y Geoffrey E. Hinton en su paper “ImageNet Classification with Deep Convolutional Neural Networks”, y se adaptó a las capacidades de cómputo con que se disponía para la ejecución de este proyecto, así como las diferencias en dimensiones entre el dataset utilizado para su red (1.2 millones de imágenes de alta resolución, divididas en 1,000 clases), y el nuestro. A continuación se describe en detalle el diseño de la red.
 
 Se decidió implementar un **_modelo secuencial_**, es decir, una red en la que la salida de una capa se convierte directamente en la entrada de la siguiente. El orden de las capas del modelo es el siguiente:
 _**Input --> Conv2D --> Conv2D --> Conv2D --> Conv2D --> Conv2D --> Flatten --> Dense --> Dense  --> Dense --> Output**_
@@ -37,7 +42,21 @@ La implementación que se utilizó de guía disminuye de igual forma el tamaño 
 
 •	Y por último, una capa densa con activación softmax, adecuada para la categorización de imágenes, y 16 neuronas, una para cada categoría del dataset con el que se está trabajando.
 
+Sin embargo, la implementación de este modelo fue poco exitosa, ya que el porcentaje de precisión dentro del entrenamiento en ningún momento pasó el 35%, y al probarlo, no llegó siquiera al 10% de presición (se muestran los resultados más a detalle en "Testing y Métricas").
 
+_**Versión 2 (XCeption)**_
+
+Una vez que se dio por deprecado el modelo inicialmente propuesto, se tomó la decisión de trabajar utilizando el principio de **_Transfer Learning_**, el cual utiliza un modelo previamente entrenado como base previo al entrenamiento. 
+
+En este caso, se utilizó como base el modelo de “imagenet”, uno de los datasets públicos más grandes y más utilizados para la categorización de imágenes. A este modelo se le agregó:
+
+•	Una capa densa, de 1024 neuronas
+•	Una capa de Dropout para evitar el overfitting (el sobre-entrenamiento del modelo, donde memoriza en lugar de aprender)
+•	Y la capa densa de salida con 16 neuronas (una por cada categoría). 
+
+Además, se agregó un paso de validación (cross-validation) dentro del entrenamiento, para conocer los avances reales del entrenamiento incluso antes del proceso de pruebas.
+
+A
 
 ## Testing y Métricas
 
