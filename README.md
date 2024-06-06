@@ -4,7 +4,7 @@
 
 El objetivo de este proyecto es implementar una Red Neuronal Convolutiva (CNN, por sus siglas en inglés), utilizando el principio de “Transfer Learning” con la herramienta “XCeption” para la categorización de imágenes de piezas de LEGO.
 
-Se utilizó un Dataset de 6,414 elementos (imágenes .PNG) divididos en 16 categorías, que corresponden a 16 tipos diferentes de piezas LEGO. La separación de datos para el entrenamiento y prueba del modelo fue de 80%/20%, considerando que 1280 imágenes serán suficientes para validar el correcto funcionamiento del modelo, y aprovechando el resto para un entrenamiento robusto y completo.
+Se utilizó un Dataset _[1]_ de 6,414 elementos (imágenes .PNG) divididos en 16 categorías, que corresponden a 16 tipos diferentes de piezas LEGO. La separación de datos para el entrenamiento y prueba del modelo fue de 80%/20%, considerando que 1280 imágenes serán suficientes para validar el correcto funcionamiento del modelo, y aprovechando el resto para un entrenamiento robusto y completo.
 
 A continuación se describe el proceso por el que se pasó para llegar a la versión final del modelo, incluyendo una versión muy poco funcional del mismo.  
 
@@ -28,7 +28,7 @@ Por último, una vez que declaramos el batch de imágenes, tanto para entrenamie
 
 **_Versión 1_**
 
-Se utilizó inicialmente como referencia la implementación propuesta por Alex Krizhevsky, Ilya Sutskever y Geoffrey E. Hinton en su paper “ImageNet Classification with Deep Convolutional Neural Networks”, y se adaptó a las capacidades de cómputo con que se disponía para la ejecución de este proyecto, así como las diferencias en dimensiones entre el dataset utilizado para su red (1.2 millones de imágenes de alta resolución, divididas en 1,000 clases), y el nuestro. A continuación se describe en detalle el diseño de la red.
+Se utilizó inicialmente como referencia la implementación propuesta por Alex Krizhevsky, Ilya Sutskever y Geoffrey E. Hinton en su paper “ImageNet Classification with Deep Convolutional Neural Networks” _[2]_, y se adaptó a las capacidades de cómputo con que se disponía para la ejecución de este proyecto, así como las diferencias en dimensiones entre el dataset utilizado para su red (1.2 millones de imágenes de alta resolución, divididas en 1,000 clases), y el nuestro. A continuación se describe en detalle el diseño de la red.
 
 Se decidió implementar un **_modelo secuencial_**, es decir, una red en la que la salida de una capa se convierte directamente en la entrada de la siguiente. El orden de las capas del modelo es el siguiente:
 _**Input --> Conv2D --> Conv2D --> Conv2D --> Conv2D --> Conv2D --> Flatten --> Dense --> Dense  --> Dense --> Output**_
@@ -48,7 +48,7 @@ Sin embargo, la implementación de este modelo fue poco exitosa, ya que el porce
 
 _**Versión 2 (XCeption)**_
 
-Una vez que se dio por deprecado el modelo inicialmente propuesto, se tomó la decisión de trabajar utilizando el principio de **_Transfer Learning_**, el cual utiliza un modelo previamente entrenado como base previo al entrenamiento. 
+Una vez que se dio por deprecado el modelo inicialmente propuesto, se tomó la decisión de trabajar utilizando el principio de **_Transfer Learning_** _[3]_, el cual utiliza un modelo previamente entrenado como base previo al entrenamiento. 
 
 En este caso, se utilizó como base el modelo de “imagenet”, uno de los datasets públicos más grandes y más utilizados para la categorización de imágenes. A este modelo se le agregó:
 
@@ -58,7 +58,10 @@ En este caso, se utilizó como base el modelo de “imagenet”, uno de los data
 
 Además, se agregó un paso de validación (cross-validation) dentro del entrenamiento, para conocer los avances reales del entrenamiento incluso antes del proceso de pruebas.
 
-A
+El paper [3] sugiere que además se declaren como entrenables las capas del modelo base, sin embargo, por cuestiones de tiempo y falta de poder computacional, se decidió entrenar únicamente las capas agregadas que se mencionaron anteriormente.
+
+El modelo anteriormente mencionado logró un 89.1% de accuracy en training y un 72.6% en validación
+
 
 ## Testing y Métricas
 
