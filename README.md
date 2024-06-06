@@ -1,4 +1,6 @@
-# AI_intro
+# Implementación de Clasificador de piezas de LEGO utilizando XCeption
+
+## Introducción
 
 El objetivo de este proyecto es implementar una Red Neuronal Convolutiva (CNN, por sus siglas en inglés), utilizando el principio de “Transfer Learning” con la herramienta “XCeption” para la categorización de imágenes de piezas de LEGO.
 
