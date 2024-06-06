@@ -62,31 +62,38 @@ A
 
 ## Testing y Métricas
 
+_**Versión 1**_
+
 Luego de haber entrenado el modelo hasta su estancamiento en el 34% de accuracy dentro del set de entrenamiento, se procedió a probar con el set de Testing, obteniendo un 9% de accuracy, apenas 3% por encima de lo que se obtendría si se categorizaran de forma aleatoria. 
 
 Haciendo un análisis más profundo, buscando el porqué de estos resultados, se obtuvieron datos interesantes, muy útiles para dar los siguientes pasos en el mejoramiento del modelo. Al construir una matriz de confusión con los datos obtenidos en las pruebas,  se observó que la gran mayoría de las predicciones que hace el modelo, son de las categorías 14, 6 y 4. Es decir,  está “confundiendo” varias categorías de piezas y simplificando su clasificación casi en su totalidad, a estas 3 categorías. 
 Se podría decir que es un problema de overfitting, interpretando que el modelo “memorizó” ciertos patrones. Sin embargo, al tener un porcentaje tan bajo de accuracy en el entrenamiento, es muy poco probable que este sea el caso.
 
+_**Versión 2**_
+
+Luego de haber entrenado el modelo de Xception hasta el 88% de accuracy en training (valor muy similar al que se presenta en el paper [3]), se corrieron pruebas que resultaron en un 87.5% de accuracy que, si bien es un modelo aún con posibles mejorasno es un modelo perfecto, logró una mejora de casi 1,000% (o 10x) con respecto a la primer versión presentada.
+(para ver la matriz de confusión, léase "documentación final.pdf")
+
+## Conclusión
+
+Luego de haber entrenado y probado ambos modelos, podemos llegar a la conclusión de que la implementación de una CNN pre-entrenada fue la solución más adecuada para el problema planteado. 
 
 
-## Siguientes Pasos
-
-Para obtener un modelo con un mayor porcentaje de precisión, se proponen dos soluciones: 
-
-La primer opción tiene que ver con el dataset. Se propone **simplificar categorías** dentro de éste, es decir, unir categorías con piezas muy similares, como la _3003_ y la _3022_, o la _11214_ y la _18651_. Esto ayudaría a que el modelo no confundiera dichas piezas, y se obtendría así un porcentaje más alto de _accuracy_
-
-La Segunda opción es Implementar un modelo llamado **_Xception_**, que utiliza redes ya establecidas como punto de partida de su entrenamiento, en lugar de comenzar con valores meramente aleatorios. Existen ejemplos de modelos entrenados para datasets muy similares a los que se están utilizando en este proyecto, con un porcentaje muy alto de precisión, lo que sugiere que se podría obtener algo similar si se decide utilizar para resolver este reto.
-
-(La documentación con imágenes se encuentra en el documento _documentacion.pdf_)
-
+(La documentación con imágenes y gráficas se encuentra en los PDFs dentro de este repositorio.  _documentacion.pdf_ es la versión del 29 de mayo, y _Documentación Final.pdf_ es, como su nombre lo indica, la versión final)
 
 
 ## Referencias:
 
-**Dataset -** [Joost Hazelzet]. ([2021]). [Images of LEGO Bricks], [Version 4]. Retrieved [May 15th] from [https://www.kaggle.com/datasets/joosthazelzet/lego-brick-images].
+**_[1]_ - Dataset -** [Joost Hazelzet]. ([2021]). [Images of LEGO Bricks], [Version 4]. Retrieved [May 15th] from [https://www.kaggle.com/datasets/joosthazelzet/lego-brick-images].
 
-**Paper de referencia –** A. Krizhevsky, I. Sutskever, and G. E. Hinton, "ImageNet classification with deep convolutional neural networks," in Advances in Neural Information Processing Systems 25, 2012, pp. 1097-1105.
+**_[2]_ - Paper de referencia –** A. Krizhevsky, I. Sutskever, and G. E. Hinton, "ImageNet classification with deep convolutional neural networks," in Advances in Neural Information Processing Systems 25, 2012, pp. 1097-1105.
+
+**_[3]_ - Paper Xception -** X. Wu, R. Liu, H. Yang and Z. Chen, "An Xception Based Convolutional Neural Network for Scene Image Classification with Transfer Learning," 2020 2nd International Conference on Information Technology and Computer Application (ITCA), Guangzhou, China, 2020, pp. 262-267.
 
 _link a Google Drive del Dataset: https://drive.google.com/drive/folders/1N3XUCOKy_GJDuUURXu-Upi_2kAdC32ds?usp=sharing_
 
-_link al Notebook: https://colab.research.google.com/drive/1Ot38XblgfjPriJ4eujBNpSJjBmvzH5Om?usp=sharing
+Link a Notebook del primer modelo: https://colab.research.google.com/drive/1Ot38XblgfjPriJ4eujBNpSJjBmvzH5Om?usp=sharing
+
+Link a Notebook del modelo con Xception:
+https://colab.research.google.com/drive/1ThbQHjBURHzVIor1GoqaGVfs58MS9pbm?usp=sharing
+
